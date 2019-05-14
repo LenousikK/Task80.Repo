@@ -7,7 +7,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 public class UploadPage extends PageBasis {
     private static final String URL = "https://the-internet.herokuapp.com/upload";
-    private static final String LOGIN_TITLE = "The Internet";
+    private static final String UPLOAD_PAGE_TITLE = "The Internet";
     private static final By INPUT_FILE = By.id("file-upload");
     private static final By BUTTON_UPLOAD = By.id("file-submit");
     private static final By SUCCESS_TEXT_MESSAGE = By.cssSelector("h3");
@@ -19,7 +19,7 @@ public class UploadPage extends PageBasis {
 
     public void open() {
         driver.get(URL);
-        wait.until(titleIs(LOGIN_TITLE));
+        wait.until(titleIs(UPLOAD_PAGE_TITLE));
     }
 
     private WebElement inputFile() {
