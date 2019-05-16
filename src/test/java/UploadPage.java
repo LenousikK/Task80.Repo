@@ -1,7 +1,13 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
@@ -52,6 +58,30 @@ public class UploadPage extends PageBasis {
     }
 
     public String getTextOfSuccessUploadedFileName() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(SUCCESS_TEXT_MESSAGE));
         return successUploadedFileName().getText();
+    }
+
+    public void uploadFileWithRobot(String pathToFolder, String fileName) {
+        inputFile().click();
+        String fileLocation = pathToFolder + fileName;
+        StringSelection stringSelection = new StringSelection(fileLocation);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
+        Robot robot = null;
+        try {
+            robot = new Robot();
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+        robot.delay(1000);
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.delay(150);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+        buttonUpload().click();
     }
 }
